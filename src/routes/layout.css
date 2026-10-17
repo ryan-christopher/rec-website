@@ -1,0 +1,188 @@
+@import 'tailwindcss';
+
+@font-face {
+	font-family: 'Atkinson Hyperlegible';
+	src: url('/fonts/Atkinson-Hyperlegible-Regular-102a.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Atkinson Hyperlegible';
+	src: url('/fonts/Atkinson-Hyperlegible-Italic-102a.woff2') format('woff2');
+	font-weight: 400;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Atkinson Hyperlegible';
+	src: url('/fonts/Atkinson-Hyperlegible-Bold-102a.woff2') format('woff2');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Atkinson Hyperlegible';
+	src: url('/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2') format('woff2');
+	font-weight: 700;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Fira Code';
+	src: url('/fonts/FiraCode-VariableFont_wght.ttf') format('truetype');
+	font-weight: 300 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@theme {
+	--font-sans: 'Atkinson Hyperlegible', ui-sans-serif, system-ui, sans-serif;
+	--font-mono: 'Fira Code', ui-monospace, monospace;
+
+	--color-background: #1c1c1c;
+	--color-foreground: #ece7d9;
+
+	/* Accent colors: text-crimson, bg-cobalt, etc. Jade and saffron get darker shades in light mode */
+	--color-crimson: #de0029;
+	--color-cobalt: #326db3;
+	--color-jade: #00aa9e;
+	--color-saffron: #f3c202;
+
+	/* Sits still for most of the cycle, then two quick bounces (0.8s each); runs 3 cycles, then stays put */
+	--animate-nudge: nudge 5s 3;
+	/* Slides left by half its width; content must be two identical halves to loop seamlessly */
+	--animate-marquee: marquee 60s linear infinite;
+
+	@keyframes marquee {
+		to {
+			transform: translateX(-50%);
+		}
+	}
+
+	@keyframes nudge {
+		0%,
+		68%,
+		84% {
+			transform: none;
+			animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+		}
+		76%,
+		92% {
+			transform: translateY(-25%);
+			animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+		}
+		100% {
+			transform: none;
+		}
+	}
+}
+
+/* Theme switch crossfade (see ThemeToggle.svelte) */
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation-duration: 0.25s;
+}
+
+/* Page slide between routes (see onNavigate in +layout.svelte). The nav bar has its own
+   view-transition-name, so it stays put above the sliding page */
+html[data-page-transition]::view-transition-old(root),
+html[data-page-transition]::view-transition-new(root) {
+	animation-duration: 0.45s;
+	animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+	animation-fill-mode: both;
+}
+
+/* An open menu panel slides back out to the right as the page changes, at its usual speed */
+html[data-page-transition]::view-transition-group(site-menu) {
+	animation-duration: 0.3s;
+	animation-timing-function: ease-out;
+}
+
+html[data-page-transition='forward']::view-transition-old(root) {
+	animation-name: slide-out-left;
+}
+
+html[data-page-transition='forward']::view-transition-new(root) {
+	animation-name: slide-in-right;
+}
+
+html[data-page-transition='back']::view-transition-old(root) {
+	animation-name: slide-out-right;
+}
+
+html[data-page-transition='back']::view-transition-new(root) {
+	animation-name: slide-in-left;
+}
+
+@keyframes slide-out-left {
+	to {
+		translate: -100% 0;
+	}
+}
+
+@keyframes slide-in-right {
+	from {
+		translate: 100% 0;
+	}
+}
+
+@keyframes slide-out-right {
+	to {
+		translate: 100% 0;
+	}
+}
+
+@keyframes slide-in-left {
+	from {
+		translate: -100% 0;
+	}
+}
+
+@custom-variant light (&:where([data-theme='light'], [data-theme='light'] *));
+
+@layer base {
+	[data-theme='light'] {
+		color-scheme: light;
+		--color-background: #ece7d9;
+		--color-foreground: #1c1c1c;
+		/* Same hue, darkened to reach 3:1 contrast on the light background */
+		--color-jade: #008e84;
+		--color-saffron: #9a7b01;
+	}
+
+	html {
+		color-scheme: dark;
+		background-color: var(--color-background);
+		color: var(--color-foreground);
+	}
+
+	/* Glide to in-page links (#id) instead of jumping */
+	@media (prefers-reduced-motion: no-preference) {
+		html {
+			scroll-behavior: smooth;
+		}
+	}
+
+	/* But jump straight to the top on page changes, so the new page is in place before it slides in */
+	html[data-page-transition] {
+		scroll-behavior: auto;
+	}
+
+	/* Shiki-highlighted code (built with both themes' colors as CSS variables, see
+	   work/project-euler/+page.server.ts): dark colors by default, light ones in light mode. The
+	   themes' own backgrounds are ignored, so code sits on the page background */
+	.shiki,
+	.shiki span {
+		color: var(--shiki-dark);
+	}
+
+	[data-theme='light'] .shiki,
+	[data-theme='light'] .shiki span {
+		color: var(--shiki-light);
+	}
+}
