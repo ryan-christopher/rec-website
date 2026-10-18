@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import type { Attachment } from 'svelte/attachments';
+	import type { RouteId } from '$app/types';
 	import DrumPad from '#lib/components/DrumPad.svelte';
 
 	// "made you look!" as 8-bit ASCII bytes
@@ -24,20 +25,60 @@
 	const aboutLink =
 		'underline decoration-2 underline-offset-4 transition-colors focus-visible:outline-none motion-reduce:transition-none';
 
-	// Shown as chips after the about text, in this order
-	const interests = [
-		'cybersecurity',
-		'music',
-		'programming',
-		'tennis',
-		'PC building',
-		'free and open source software',
-		'video games',
-		'cryptography',
-		'DJing',
-		'horology',
-		'art'
+	// A blurb is plain text, or a list of pieces to put links in it: strings, plus links to a page
+	// of the site ({ text, page: '/work' }) or elsewhere ({ text, href: 'https://...' }, new tab),
+	// e.g. ['I like ', { text: 'this', href: 'https://example.com' }, ' a lot']
+	type BlurbPart = string | { text: string; page: RouteId } | { text: string; href: string };
+
+	// Shown as chips after the about text, in this order. One with a blurb becomes a button: clicking it
+	// shows the blurb under the chips until it's clicked again, Escape, or a click elsewhere
+	const interests: { name: string; blurb?: string | BlurbPart[] }[] = [
+		{
+			name: 'cybersecurity',
+			blurb: 'I thought about having a .txt file be dowloaded to the user\'s device when this is clicked but that seemed extreme to me...'
+		},
+		{
+			name: 'music',
+			blurb: 'I studied double bass in undergrad and now I play a lot of bass guitar'
+		},
+		{ name: 'programming', blurb: 'Rust is my favorite programming language, long live Ferris 🦀' },
+		{ name: 'tennis', blurb: "I've been playing tennis since I was 7!" },
+		{
+			name: 'PC building',
+			blurb: "I will build a PC at every possible opportunity, let's talk hardware!"
+		},
+		{ name: 'free and open source software', blurb: 'Fedora KDE is my distro of choice' },
+		{
+			name: 'video games',
+			blurb:
+				'Mass Effect is my all time favorite with Elden Ring and Cyberpunk 2077 as honorable mentions'
+		},
+		{ name: 'cryptography', blurb: [
+					'38762cf7f55934b34d179ae6a4c80cadccbb7f0a, ',
+					{text: 'iykyk', href: 'https://security.googleblog.com/2017/02/announcing-first-sha1-collision.html'}] },
+		{
+			name: 'DJing',
+			blurb: [
+				'Four Tet is my favorite DJ, I highly recommend watching ',
+				{text: 'his set from Alexandra Palace', href: 'https://youtu.be/07CAVFFNyw4?si=DM8YndBfEJnZXI2Z'}]
+		},
+		{ name: 'horology', blurb: 'I really like pilot\'s watches' },
+		{
+			name: 'art',
+			blurb: 'Gustave Doré is one of my favorite artists, particularly his Dance of Sabbath'
+		}
 	];
+
+	// Links in blurbs: underlined in crimson, like the chips' hover border
+	const blurbLinkColor =
+		'decoration-crimson/70 hover:decoration-crimson focus-visible:decoration-crimson';
+
+	// Every blurb (and the hint) shares one grid cell, fading in and out in place
+	const blurbSlot =
+		'col-start-1 row-start-1 transition-[opacity,visibility] duration-200 motion-reduce:transition-none';
+
+	let openInterest = $state<string>();
+	const shownInterest = $derived(interests.find((interest) => interest.name === openInterest));
 
 	const arrows = {
 		// Scrolls down the page
@@ -74,7 +115,13 @@
 	let drumHits = 0;
 
 	function onDrumHit() {
-		if (++drumHits === 5) say('Sounds good', 5000);
+		if (drumHits < 100) {
+			++drumHits;
+		}
+		if (drumHits === 5) say('Sounds good', 4000);
+		if (drumHits === 20) say('Groovy', 4000);
+		if (drumHits === 40) say("That one's a classic", 4000);
+		if (drumHits === 80) say("When's the next concert?", 4000);
 	}
 
 	let jsParallax = $state(false);
@@ -131,6 +178,20 @@
 <svelte:head>
 	<title>Ryan Christopher</title>
 </svelte:head>
+
+<!-- An open interest blurb closes on Escape or a click outside the chips and the blurb -->
+<svelte:window
+	onkeydown={(event) => {
+		if (event.key === 'Escape') openInterest = undefined;
+	}}
+	onclick={(event) => {
+		if (
+			event.target instanceof Element &&
+			!event.target.closest('[aria-controls="interest-blurb"], #interest-blurb')
+		)
+			openInterest = undefined;
+	}}
+/>
 
 {#snippet linkContent(label: string, arrow: keyof typeof arrows)}
 	<span class="grid">
@@ -314,25 +375,80 @@
 
 	<!-- Interests: outlined mono chips, like the resume's skills and the work cards' tags -->
 	<p class="mx-auto mt-8 max-w-2xl text-lg sm:text-xl">Some of my interests are:</p>
-	<ul class="mx-auto mt-3 flex max-w-2xl flex-wrap gap-2">
-		{#each interests as interest (interest)}
-			<li
-				class="border border-foreground/50 px-2 py-0.5 font-mono text-sm text-foreground/90 sm:text-base"
-			>
-				{interest}
-			</li>
-		{/each}
-	</ul>
+	<!-- The shown blurb sits under the chips. Every blurb (and the hint shown when none is) is
+	     stacked in one grid cell, the hidden ones invisible, so the space is always as tall as the
+	     longest one and the text below never jumps -->
+	<div class="mx-auto mt-3 max-w-2xl">
+		<ul class="flex flex-wrap gap-2">
+			{#each interests as interest (interest.name)}
+				<li class="font-mono text-sm text-foreground/90 sm:text-base">
+					{#if interest.blurb}
+						<!-- Neutral border like the other chips, solid and underlined on hover/focus; both crimson
+						     (the landing "about me" link's color) while its blurb shows -->
+						<button
+							type="button"
+							aria-expanded={openInterest === interest.name}
+							aria-controls="interest-blurb"
+							class={[
+								'cursor-pointer border px-2 py-0.5 underline-offset-4 transition-colors focus-visible:outline-none motion-reduce:transition-none',
+								shownInterest === interest
+									? 'border-crimson underline decoration-crimson'
+									: 'border-foreground/50 hover:border-foreground hover:underline focus-visible:border-foreground focus-visible:underline'
+							]}
+							onclick={() =>
+								(openInterest = openInterest === interest.name ? undefined : interest.name)}
+						>
+							{interest.name}
+						</button>
+					{:else}
+						<span class="block border border-foreground/50 px-2 py-0.5">{interest.name}</span>
+					{/if}
+				</li>
+			{/each}
+		</ul>
+		<div
+			id="interest-blurb"
+			aria-live="polite"
+			class="mt-3 grid text-base leading-snug text-foreground/90 sm:text-lg"
+		>
+			<p class={[blurbSlot, 'text-foreground/50', shownInterest?.blurb && 'invisible opacity-0']}>
+				Click or tap one to read more.
+			</p>
+			{#each interests as interest (interest.name)}
+				{#if interest.blurb}
+					<p class={[blurbSlot, shownInterest !== interest && 'invisible opacity-0']}>
+						{#each typeof interest.blurb === 'string' ? [interest.blurb] : interest.blurb as part, i (i)}
+							{#if typeof part === 'string'}
+								{part}
+							{:else if 'page' in part}
+								<a href={resolve(part.page)} class={[aboutLink, blurbLinkColor]}>{part.text}</a>
+							{:else}
+								<!-- External URLs aren't routes, so resolve() doesn't apply to them -->
+								<!-- eslint-disable svelte/no-navigation-without-resolve -->
+								<a
+									href={part.href}
+									target="_blank"
+									rel="noopener noreferrer"
+									class={[aboutLink, blurbLinkColor]}
+									>{part.text}<span class="sr-only"> (opens in a new tab)</span></a
+								>
+								<!-- eslint-enable svelte/no-navigation-without-resolve -->
+							{/if}
+						{/each}
+					</p>
+				{/if}
+			{/each}
+		</div>
+	</div>
 
 	<!-- Pointers to the work and contact pages, underlined in the same accent colors as the landing
 	     links (jade / saffron, 2px at 70%, solid on hover/focus) -->
 	<p class="mx-auto mt-8 max-w-2xl text-lg leading-snug sm:text-xl">
-		To see what I've been working on lately, check out my <a
+		To see what I've been working on lately check out my <a
 			href={resolve('/work')}
 			class={[aboutLink, 'decoration-jade/70 hover:decoration-jade focus-visible:decoration-jade']}
-			>work page</a
-		>
-		and to get in touch visit my
+			>works & projects page</a
+		>, and to get in touch visit my
 		<a
 			href={resolve('/contact')}
 			class={[

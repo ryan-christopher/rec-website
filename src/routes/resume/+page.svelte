@@ -9,12 +9,12 @@
 			place: 'Boston, MA',
 			dates: 'July 2023 - Present',
 			points: [
-				'Develop and maintain processes for data sanitization ensuring confidential data is unrecoverable from retired university assets in compliance with NIST SP 800-88',
-				'Triage and escalate tickets from faculty, staff, and students to proper support groups for ongoing major incidents, phishing attempts, hardware/software support, and account assistance',
-				'Serve on the student management team to hire, train, and manage over 50 student employees',
-				'Create Power BI dashboards, ServiceNow reports, and Python scripts to report Service Desk and Learning & Event Technology Services metrics to leadership',
-				'Publish and maintain internal and client-facing webpages',
-				'Point person for the student loaner laptop program containing nearly 100 MacBook Airs for assisting students in their academic work'
+			'Develop and maintain processes for data sanitization ensuring confidential data is unrecoverable from retired university assets in compliance with NIST SP 800-88',
+			'Triage and escalate tickets from faculty, staff, and students to proper support groups for ongoing major incidents, phishing attempts, hardware/software support, and account assistance',
+			'Serve on the student management team to hire, train, and manage over 50 student employees',
+			'Create Power BI dashboards, ServiceNow reports, and Python scripts to report Service Desk and Learning & Event Technology Services metrics to leadership',
+			'Publish and maintain internal and client-facing webpages',
+			'Point person for the student loaner laptop program containing nearly 100 MacBook Airs for assisting students in their academic work'
 			]
 		},
 		{
@@ -23,11 +23,9 @@
 			place: 'Las Vegas, NV',
 			dates: 'July 2020 - August 2023',
 			points: [
-				'Conducted opening of second Coder School location in Nevada',
-				'Developed curricula including web development, game development, esports programming, algorithm design, and music production with code',
-				'Taught computer science principles and programming to students aged 5 through 17 in educational and summer camp settings',
-				'Designed projects and applications with students using Python, HTML, CSS, JavaScript, Unity, and Scratch',
-				'Led groups of up to 12 students in classes on differing languages and subjects'
+			'Developed curricula including web development, game development, esports programming, and algorithm design, using Python, HTML, CSS, JavaScript, Unity, and Scratch',
+			'Taught computer science principles and programming to students aged 5 through 17 in educational and summer camp settings',
+			'Led groups of up to 12 students in classes on differing languages and subjects'
 			]
 		},
 		{
@@ -36,9 +34,9 @@
 			place: 'Brookline, MA',
 			dates: 'January 2022 - May 2023',
 			points: [
-				"Rebuilt organization's website for improved experience and performance",
-				'Led a team of specialists serving the Brookline Public Schools district',
-				"Facilitated administrative duties of account management, IT support, data analytics, and oversight for the center's middle school program"
+			'Facilitated IT support, data analytics, and oversight for the center\'s middle school program',
+			'Rebuilt organization\'s website for improved experience and performance',
+			'Led a team of specialists serving the Brookline Public Schools district'
 			]
 		}
 	];

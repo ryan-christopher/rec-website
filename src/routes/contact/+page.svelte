@@ -10,7 +10,7 @@
 	];
 
 	// Same as the resume page: bold heading, then a 1px rule with the same space above and below it
-	const headingClass = 'text-3xl font-bold sm:text-4xl';
+	const headingClass = 'text-2xl font-bold sm:text-3xl';
 	const ruleClass = 'my-3 border-foreground';
 </script>
 
