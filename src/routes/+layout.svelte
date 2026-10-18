@@ -1,5 +1,7 @@
 <script lang="ts">
 	import './layout.css';
+	import { injectAnalytics } from '@vercel/analytics/sveltekit-next';
+	import { dev } from '$app/env';
 	import { onNavigate } from '$app/navigation';
 	import favicon from '#lib/assets/favicon.svg';
 	import SiteFooter from '#lib/components/SiteFooter.svelte';
@@ -7,6 +9,9 @@
 	import type { LayoutProps } from './$types';
 
 	let { children }: LayoutProps = $props();
+
+	// Vercel Web Analytics: loads the script once and sends a pageview on every route change
+	injectAnalytics({ mode: dev ? 'development' : 'production' });
 
 	// How deep a route sits: / is 0, /work is 1, /work/[slug] is 2
 	const depth = (routeId: string | null | undefined) =>
