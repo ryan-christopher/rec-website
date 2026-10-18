@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 @font-face {
-	font-family: 'Atkinson Hyperlegible';
+	font-family:'Atkinson Hyperlegible';
 	src: url('/fonts/Atkinson-Hyperlegible-Regular-102a.woff2') format('woff2');
 	font-weight: 400;
 	font-style: normal;
@@ -9,7 +9,7 @@
 }
 
 @font-face {
-	font-family: 'Atkinson Hyperlegible';
+	font-family:'Atkinson Hyperlegible';
 	src: url('/fonts/Atkinson-Hyperlegible-Italic-102a.woff2') format('woff2');
 	font-weight: 400;
 	font-style: italic;
@@ -17,7 +17,7 @@
 }
 
 @font-face {
-	font-family: 'Atkinson Hyperlegible';
+	font-family:'Atkinson Hyperlegible';
 	src: url('/fonts/Atkinson-Hyperlegible-Bold-102a.woff2') format('woff2');
 	font-weight: 700;
 	font-style: normal;
@@ -25,7 +25,7 @@
 }
 
 @font-face {
-	font-family: 'Atkinson Hyperlegible';
+	font-family:'Atkinson Hyperlegible';
 	src: url('/fonts/Atkinson-Hyperlegible-BoldItalic-102a.woff2') format('woff2');
 	font-weight: 700;
 	font-style: italic;
