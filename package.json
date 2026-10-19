@@ -44,6 +44,7 @@
 		"#lib/*": "./src/lib/*"
 	},
 	"dependencies": {
+		"@upstash/redis": "^1.39.0",
 		"@vercel/analytics": "^2.1.0-canary.5"
 	}
 }

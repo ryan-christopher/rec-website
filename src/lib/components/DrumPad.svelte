@@ -3,6 +3,9 @@
 	// Pads are orange and flash purple when hit (-400 in dark mode, -600 in light, like the footer icons).
 	// The keys spell RYAN across the 2×2 grid: R Y over A N
 
+	import { resolve } from '$app/paths';
+	import { maxHitsPerRequest } from '#lib/drumHits.js';
+
 	let { onhit }: { onhit?: () => void } = $props();
 
 	let ctx: AudioContext | undefined;
@@ -109,7 +112,70 @@
 		pads[i].play();
 		hits[i]++;
 		onhit?.();
+		countHit();
 	}
+
+	// Total hits by every visitor, kept in /api/drum-hits. Hits are sent in batches (at most one
+	// request every 2s) rather than one request each. The shown total is the server's last answer
+	// plus this visitor's hits it hasn't counted yet, so it goes up at once on every hit. It stays
+	// hidden until the server first answers (and for good if the counter is unavailable)
+	let serverTotal = $state<number>();
+	let unsent = $state(0);
+	let sending = $state(0);
+	let flushTimer: ReturnType<typeof setTimeout> | undefined;
+	const total = $derived(serverTotal === undefined ? undefined : serverTotal + unsent + sending);
+
+	// The counter only goes up, so an older answer arriving late never lowers it
+	function updateTotal(value: unknown) {
+		if (typeof value === 'number') serverTotal = Math.max(serverTotal ?? 0, value);
+	}
+
+	function countHit() {
+		unsent++;
+		flushTimer ??= setTimeout(flush, 2000);
+	}
+
+	async function flush() {
+		clearTimeout(flushTimer);
+		flushTimer = undefined;
+		const count = Math.min(unsent, maxHitsPerRequest);
+		if (!count) return;
+		unsent -= count;
+		sending += count;
+		if (unsent) flushTimer = setTimeout(flush, 2000);
+		try {
+			// keepalive lets the request finish when it's sent as the visitor leaves the page
+			const response = await fetch(resolve('/api/drum-hits'), {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({ count }),
+				keepalive: true
+			});
+			if (!response.ok) throw new Error(`${response.status}`);
+			updateTotal((await response.json()).total);
+		} catch {
+			// Try them again with the next batch
+			unsent += count;
+		} finally {
+			sending -= count;
+		}
+	}
+
+	$effect(() => {
+		fetch(resolve('/api/drum-hits'))
+			.then((response) => (response.ok ? response.json() : undefined))
+			.then((data) => updateTotal(data?.total))
+			.catch(() => {});
+
+		// Send what's left when the tab is hidden or closed (more reliable on phones than pagehide),
+		// and when the page is left for another one on the site
+		const onvisibilitychange = () => document.visibilityState === 'hidden' && flush();
+		document.addEventListener('visibilitychange', onvisibilitychange);
+		return () => {
+			document.removeEventListener('visibilitychange', onvisibilitychange);
+			flush();
+		};
+	});
 
 	// Pads sound on pointerdown, for less delay than waiting for the click. But on touch screens
 	// pointerdown doesn't count as an interaction that allows sound, so until audio is running
@@ -173,6 +239,18 @@
 	<ellipse cx="12" cy="9" rx="10" ry="5" />
 {/snippet}
 
+<!-- Everyone's hits so far, above the pads (the corner is anchored at the bottom, so it appearing
+     doesn't move them). As wide as the pads (w-0 min-w-full: it doesn't widen the corner itself),
+     so longer text wraps upwards instead of spreading the pads apart -->
+{#if total !== undefined}
+	<p class="appear mb-1.5 w-0 min-w-full font-mono text-sm text-foreground/90 sm:text-sm">
+		<span class="text-foreground font-bold text-base">{total.toLocaleString('en-US')}</span>
+		{total === 1 ? 'hit' : 'hits from all visitors'}<span class="sr-only">
+			on the drum pad by all visitors</span
+		>
+	</p>
+{/if}
+
 <div role="group" aria-label="Drum pad" class="grid grid-cols-2 gap-1.5">
 	{#each pads as pad, i (pad.name)}
 		<button
@@ -215,6 +293,16 @@
 	.flash {
 		opacity: 0;
 		animation: flash 300ms ease-out;
+	}
+
+	.appear {
+		animation: appear 300ms ease-out;
+	}
+
+	@keyframes appear {
+		from {
+			opacity: 0;
+		}
 	}
 
 	@keyframes flash {
