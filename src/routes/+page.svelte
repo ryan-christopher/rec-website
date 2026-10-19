@@ -35,7 +35,8 @@
 	const interests: { name: string; blurb?: string | BlurbPart[] }[] = [
 		{
 			name: 'cybersecurity',
-			blurb: 'I thought about having a .txt file be dowloaded to the user\'s device when this is clicked but that seemed extreme to me...'
+			blurb:
+				"I thought about having a .txt file be downloaded to the user's device when this is clicked but that seemed extreme to me..."
 		},
 		{
 			name: 'music',
@@ -51,18 +52,29 @@
 		{
 			name: 'video games',
 			blurb:
-				'Mass Effect is my all time favorite with Elden Ring and Cyberpunk 2077 as honorable mentions'
+				'Mass Effect is my all-time favorite, with Elden Ring and Cyberpunk 2077 as honorable mentions'
 		},
-		{ name: 'cryptography', blurb: [
-					'38762cf7f55934b34d179ae6a4c80cadccbb7f0a, ',
-					{text: 'iykyk', href: 'https://security.googleblog.com/2017/02/announcing-first-sha1-collision.html'}] },
+		{
+			name: 'cryptography',
+			blurb: [
+				'38762cf7f55934b34d179ae6a4c80cadccbb7f0a, ',
+				{
+					text: 'iykyk',
+					href: 'https://security.googleblog.com/2017/02/announcing-first-sha1-collision.html'
+				}
+			]
+		},
 		{
 			name: 'DJing',
 			blurb: [
 				'Four Tet is my favorite DJ, I highly recommend watching ',
-				{text: 'his set from Alexandra Palace', href: 'https://youtu.be/07CAVFFNyw4?si=DM8YndBfEJnZXI2Z'}]
+				{
+					text: 'his set from Alexandra Palace',
+					href: 'https://youtu.be/07CAVFFNyw4?si=DM8YndBfEJnZXI2Z'
+				}
+			]
 		},
-		{ name: 'horology', blurb: 'I really like pilot\'s watches' },
+		{ name: 'horology', blurb: "I really like pilot's watches" },
 		{
 			name: 'art',
 			blurb: 'Gustave Doré is one of my favorite artists, particularly his Dance of Sabbath'
@@ -344,8 +356,8 @@
 	<img
 		src="/images/bu-bridge.jpg"
 		alt=""
-		width="2000"
-		height="1326"
+		width="1700"
+		height="1127"
 		loading="lazy"
 		class="bridge-photo absolute inset-0 size-full object-cover object-[50%_60%] brightness-60"
 	/>
@@ -368,8 +380,8 @@
 <section class="px-[5%] pt-10 pb-24 sm:pt-24">
 	<p class="mx-auto max-w-2xl text-lg leading-snug sm:text-xl">
 		Hello there! I'm Ryan, a classically trained musician turned security-focused IT professional. I
-		have an MS in Computer Science with a concentration in Security from Boston University where I
-		currently work. Cybersecurity, IT operations, and higher education are my specialties and I am
+		have an MS in Computer Science with a concentration in Security from Boston University, where I
+		currently work. Cybersecurity, IT operations, and higher education are my specialties, and I am
 		always looking for ways to help others do their work effectively and safely.
 	</p>
 

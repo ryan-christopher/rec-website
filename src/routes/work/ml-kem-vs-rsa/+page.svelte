@@ -165,7 +165,7 @@
 			target="_blank"
 			rel="noreferrer"
 			class="underline decoration-foreground/40 underline-offset-4 hover:decoration-foreground focus-visible:decoration-foreground"
-			>Rust Crypto github repository<span class="sr-only">&nbsp;(opens in a new tab)</span></a
+			>RustCrypto GitHub repository<span class="sr-only">&nbsp;(opens in a new tab)</span></a
 		>
 		<!-- eslint-enable svelte/no-navigation-without-resolve -->
 		where a collection of crates for various cryptographic functions are maintained. Among them are both
@@ -217,7 +217,7 @@
 		<hr class={ruleClass} />
 	</div>
 	<p>
-		Initially the implementation of post quantum cryptography into existing systems was seen as
+		Initially the implementation of post-quantum cryptography into existing systems was seen as
 		impractical due to its computational weight. The results from this paper propose implementations
 		that do not take as heavy of a computational toll as once thought, as algorithms like ML-KEM and
 		ML-DSA are improved upon and tested more comprehensively. In particular, the operation time of

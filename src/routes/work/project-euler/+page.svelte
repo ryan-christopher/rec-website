@@ -13,10 +13,10 @@
 <!-- Title and date come from this page's entry in src/lib/works.ts -->
 <ProjectPage>
 	<p>
-		When I found out about Project Euler I was especially interested in the challenge to solve a
+		When I found out about Project Euler, I was especially interested in the challenge to solve a
 		problem efficiently. Below is how I have gone about approaching the problems I have solved so
 		far. Project Euler allows problems 1 to 100 to be shared for educational purposes, and I am a
-		big fan of allowing others the ability to have that "aha!" moment as well so I have removed
+		big fan of allowing others the ability to have that "aha!" moment as well, so I have removed
 		function calls and any outputted answers.
 		<br /><br />
 		For more information,

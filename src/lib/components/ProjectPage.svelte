@@ -27,7 +27,7 @@
 	<!-- Fixed top-left back arrow, to the work page -->
 	<BackArrow to="/work" />
 
-	<div class="mx-auto lg:w-[60vw]">
+	<div class="mx-auto lg:w-[55vw]">
 		<!-- The same space (mt-4) between title and date, and between date and content -->
 		<h1 class="text-[clamp(2.5rem,8vw,5rem)] leading-none font-bold">{work.title}</h1>
 		<p class="mt-4 font-mono text-sm text-foreground/70">{work.date}</p>
