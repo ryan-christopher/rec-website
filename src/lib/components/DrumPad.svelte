@@ -245,7 +245,7 @@
 {#if total !== undefined}
 	<p class="appear mb-1.5 w-0 min-w-full font-mono text-sm text-foreground/90 sm:text-sm">
 		<span class="text-foreground font-bold text-base">{total.toLocaleString('en-US')}</span>
-		{total === 1 ? 'hit' : 'hits from all visitors'}<span class="sr-only">
+		{total === 1 ? 'hit' : 'notes played'}<span class="sr-only">
 			on the drum pad by all visitors</span
 		>
 	</p>

@@ -422,8 +422,8 @@
 	<p>
 		Then, once I confirmed that it was showing up as a 149GB drive, I tried using the exact same
 		hexdump command that I did previously to view the contents of the file. This time, however, I
-		was met with the following "invalid argument" message. This is not because the data (or even the
-		sectors) don't exist, but because they cannot be seen while the HPA is enabled.
+		was met with the following "invalid argument" message. This is not because the data or
+		sectors doen't exist, but because they cannot be seen while the HPA is enabled.
 	</p>
 
 	<figure class="flex flex-col gap-2">
