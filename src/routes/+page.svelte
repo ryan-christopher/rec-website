@@ -252,7 +252,7 @@
 	     ends of the ticker lines: "about me" and "resume" above, "my work" and "contact" below,
 	     each pair split left and right -->
 	<div class="absolute inset-x-0 top-1/2 flex -translate-y-1/2 flex-col gap-4">
-		<p class="flex justify-between px-[10%] text-lg leading-tight sm:text-2xl lg:px-[25%]">
+		<p class="flex justify-between px-[15%] text-lg leading-tight sm:text-2xl lg:px-[30%]">
 			<a href="#about" class={landingLink} style:--accent="var(--color-crimson)">
 				{@render linkContent('about', 'down')}
 			</a>
@@ -276,7 +276,7 @@
 			</div>
 		</div>
 
-		<p class="flex justify-between px-[10%] text-lg leading-tight sm:text-2xl lg:px-[25%]">
+		<p class="flex justify-between px-[15%] text-lg leading-tight sm:text-2xl lg:px-[30%]">
 			<a href={resolve('/work')} class={landingLink} style:--accent="var(--color-jade)">
 				{@render linkContent('my work', 'right')}
 			</a>

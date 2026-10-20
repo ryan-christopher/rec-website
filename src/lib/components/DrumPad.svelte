@@ -240,18 +240,22 @@
 {/snippet}
 
 <!-- Everyone's hits so far, above the pads (the corner is anchored at the bottom, so it appearing
-     doesn't move them). As wide as the pads (w-0 min-w-full: it doesn't widen the corner itself),
-     so longer text wraps upwards instead of spreading the pads apart -->
+     doesn't move them). Kept on one line (whitespace-nowrap); its box is as wide as the pads
+     (w-0 min-w-full), so longer text runs past their right edge instead of widening the corner -->
 {#if total !== undefined}
-	<p class="appear mb-1.5 w-0 min-w-full font-mono text-sm text-foreground/90 sm:text-sm">
-		<span class="text-foreground font-bold text-base">{total.toLocaleString('en-US')}</span>
+	<p
+		class="appear mb-1.5 w-0 min-w-full font-mono text-sm whitespace-nowrap text-foreground/90 sm:text-base"
+	>
+		<span class="text-base font-bold text-foreground sm:text-lg"
+			>{total.toLocaleString('en-US')}</span
+		><br>
 		{total === 1 ? 'hit' : 'notes played'}<span class="sr-only">
 			on the drum pad by all visitors</span
 		>
 	</p>
 {/if}
 
-<div role="group" aria-label="Drum pad" class="grid grid-cols-2 gap-1.5">
+<div role="group" aria-label="Drum pad" class="grid grid-cols-2 gap-2">
 	{#each pads as pad, i (pad.name)}
 		<button
 			type="button"
@@ -259,7 +263,7 @@
 			aria-keyshortcuts={pad.key.toUpperCase()}
 			onpointerdown={() => onpointerdown(i)}
 			onclick={() => onclick(i)}
-			class="relative flex size-12 touch-manipulation flex-col items-center justify-center gap-1 border border-orange-400/70 font-mono leading-none transition-[border-color,scale] duration-100 select-none hover:border-orange-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground active:border-purple-400 motion-safe:active:scale-95 motion-reduce:transition-none sm:size-16 light:border-orange-600/70 light:hover:border-orange-600 light:active:border-purple-600"
+			class="relative flex size-14 touch-manipulation flex-col items-center justify-center gap-1 border border-orange-400/70 font-mono leading-none transition-[border-color,scale] duration-100 select-none hover:border-orange-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground active:border-purple-400 motion-safe:active:scale-95 motion-reduce:transition-none sm:size-20 light:border-orange-600/70 light:hover:border-orange-600 light:active:border-purple-600"
 		>
 			{#key hits[i]}
 				{#if hits[i]}
@@ -269,10 +273,10 @@
 					></span>
 				{/if}
 			{/key}
-			<span class="relative text-sm sm:text-base">[{pad.key}]</span>
+			<span class="relative text-base sm:text-lg">[{pad.key}]</span>
 			<!-- The sound's icon; its name is in the button's aria-label -->
 			<svg
-				class="relative size-4 text-foreground/70 sm:size-5"
+				class="relative size-5 text-foreground/70 sm:size-6"
 				viewBox="0 0 24 24"
 				fill="none"
 				stroke="currentColor"
