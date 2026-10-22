@@ -249,7 +249,7 @@
 		<span class="text-base font-bold text-foreground sm:text-lg"
 			>{total.toLocaleString('en-US')}</span
 		><br>
-		{total === 1 ? 'hit' : 'notes played'}<span class="sr-only">
+		{total === 1 ? 'hit' : 'notes played by all visitors'}<span class="sr-only">
 			on the drum pad by all visitors</span
 		>
 	</p>
