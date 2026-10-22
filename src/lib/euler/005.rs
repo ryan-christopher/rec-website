@@ -1,11 +1,3 @@
-// Problem 5: Smallest Multiple
-
-// 2520 is the smallest number that can be divided by each of the numbers from
-// 1 to 10 without any remainer.
-
-// What is the smallest positive number that is evenly divisible by all of the
-// numbers from 1 to 20?
-
 // div_by_all takes num as input and finds the smallest positive number that is
 // evenly divisible by all numbers from 1 to num
 fn div_by_all(num: i64) -> i64 {

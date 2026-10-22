@@ -6,8 +6,7 @@ import type { PageServerLoad } from './$types';
 export const prerender = true;
 
 // Solution files, copied from the ProjectEuler repo's src/bin/ into src/lib/euler/ (same names,
-// e.g. 001.rs). Re-copy a file when the solution changes (and check its headerLines in
-// problems.ts)
+// e.g. 001.rs), shown whole. Re-copy a file when the solution changes
 const files = import.meta.glob<string>('/src/lib/euler/*.rs', {
 	query: '?raw',
 	import: 'default',
@@ -18,14 +17,10 @@ export const load: PageServerLoad = async () => {
 	// Highlighted solution HTML by problem number
 	const solutions: Record<number, string> = {};
 
-	for (const { number, headerLines } of problems) {
+	for (const { number } of problems) {
 		const source = files[`/src/lib/euler/${String(number).padStart(3, '0')}.rs`];
 		if (source === undefined) throw new Error(`Missing src/lib/euler/ file for problem ${number}`);
-		// Without the file's header (problem number, title and statement), which the page already
-		// shows above the code. Code comments right after it are kept
-		const code = source.split('\n').slice(headerLines).join('\n').trim();
-
-		solutions[number] = await highlightRust(code);
+		solutions[number] = await highlightRust(source.trim());
 	}
 
 	return { solutions };

@@ -1,10 +1,15 @@
-// Problem 7: 10,001st Prime
- 
-// By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that
-// the 6th prime is 13.
- 
-// What is the 10,001st prime number?
- 
+fn find_nth_prime(n: i64) -> i64{
+    let mut curr_prime = 1;
+    let mut x = 1;
+    while curr_prime < n {
+        x += 2;
+        if is_prime(x) {
+            curr_prime += 1;
+        }
+    }
+    x
+}
+
 fn is_prime(n: i64) -> bool {
     if n % 2 == 0 {
         return false;
@@ -21,16 +26,4 @@ fn is_prime(n: i64) -> bool {
         search_val += 2;
     }
     return true;
-}
- 
-fn find_nth_prime(n: i64) -> i64{
-    let mut curr_prime = 1;
-    let mut x = 1;
-    while curr_prime < n {
-        x += 2;
-        if is_prime(x) {
-            curr_prime += 1;
-        }
-    }
-    x
 }

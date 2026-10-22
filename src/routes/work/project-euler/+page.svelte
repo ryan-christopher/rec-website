@@ -8,6 +8,14 @@
 
 	// Problem numbers, two digits: 1 → "01"
 	const pad = (number: number) => String(number).padStart(2, '0');
+
+	// A statement's paragraphs (separated by a blank line), without the template literal's
+	// indentation or the blank lines at either end
+	const paragraphs = (statement: string) =>
+		statement
+			.replace(/^[ \t]+/gm, '')
+			.trim()
+			.split(/\n{2,}/);
 </script>
 
 <!-- Title and date come from this page's entry in src/lib/works.ts -->
@@ -118,7 +126,21 @@
 					</summary>
 
 					<div class="flex flex-col gap-3 pb-5">
-						<!-- The problem on projecteuler.net first, then its statement. External URL, so there's no
+						<!-- One <p> per paragraph (separated by a blank line in the statement) -->
+						{#each paragraphs(problem.statement) as paragraph (paragraph)}
+							<p class="whitespace-pre-line">{paragraph}</p>
+						{/each}
+
+						<!-- The solution: the Rust file's code, highlighted at build time (trusted HTML from
+						     Shiki), scrolling sideways if a line is too long. No visible label; the heading is
+						     for screen readers, so the code block isn't announced without context -->
+						<h3 class="sr-only">Solution in Rust</h3>
+						<div class="mt-3">
+							<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+							{@html data.solutions[problem.number]}
+						</div>
+
+						<!-- The problem on projecteuler.net. External URL, so there's no
 						     app route to resolve() -->
 						<!-- eslint-disable svelte/no-navigation-without-resolve -->
 						<a
@@ -132,18 +154,6 @@
 								(opens in a new tab)</span
 							>
 						</a>
-						{#each problem.statement as paragraph (paragraph)}
-							<p class="whitespace-pre-line">{paragraph}</p>
-						{/each}
-
-						<!-- The solution: the Rust file's code, highlighted at build time (trusted HTML from
-						     Shiki), scrolling sideways if a line is too long. No visible label; the heading is
-						     for screen readers, so the code block isn't announced without context -->
-						<h3 class="sr-only">Solution in Rust</h3>
-						<div class="mt-3">
-							<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-							{@html data.solutions[problem.number]}
-						</div>
 					</div>
 				</details>
 			</li>

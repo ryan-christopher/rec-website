@@ -1,29 +1,3 @@
-// Problem 4: Largest Palindrome Project
-
-// A palindromic number reads the same both ways. The largest palindrome made from the 
-// product of two 2-digit numbers is 9009 = 91 x 99.
-
-// Find the largest palindrome made from the product of two 3-digit numbers.
-
-// function to determine if a number is a palindrome
-fn is_palindrome(num: i64) -> bool {
-    // convert to string
-    let num_string = num.to_string();
-    // store in vector
-    let num_vec = num_string.split("").collect::<Vec<_>>();
-    // start on either ends of the vector, check if values are the same
-    let (mut start, mut end) = (1, num_vec.len() - 2);
-    while start < end {
-        // if any do not match, return false
-        if num_vec[start] != num_vec[end] {
-            return false
-        }
-        start += 1;
-        end -= 1;
-    }
-    return true
-}
-
 // finds the largest palindromic number made from the products 
 // of two numbers that are each digit_num in length
 fn largest_palindrome(digit_num: u32) -> i64{
@@ -51,4 +25,23 @@ fn largest_palindrome(digit_num: u32) -> i64{
         }
     }
     return largest_pal;
+}
+
+// function to determine if a number is a palindrome
+fn is_palindrome(num: i64) -> bool {
+    // convert to string
+    let num_string = num.to_string();
+    // store in vector
+    let num_vec = num_string.split("").collect::<Vec<_>>();
+    // start on either ends of the vector, check if values are the same
+    let (mut start, mut end) = (1, num_vec.len() - 2);
+    while start < end {
+        // if any do not match, return false
+        if num_vec[start] != num_vec[end] {
+            return false
+        }
+        start += 1;
+        end -= 1;
+    }
+    return true
 }

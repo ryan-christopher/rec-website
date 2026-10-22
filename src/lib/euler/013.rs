@@ -1,7 +1,3 @@
-// Problem 13: Large Sum
-// Work out the first ten digits of the sum of the following one-hundred
-// 50-digit numbers.
- 
 fn find_large_sum(numbers: Vec<&str>) -> String {
     let mut sum = String::new();
     let (mut processed_nums, mut remainder) = (0, 0);
