@@ -6,8 +6,8 @@
 	// Highlighted solutions by problem number, built in +page.server.ts
 	let { data } = $props();
 
-	// Problem numbers as on the repo's files: 1 → "001"
-	const pad = (number: number) => String(number).padStart(3, '0');
+	// Problem numbers, two digits: 1 → "01"
+	const pad = (number: number) => String(number).padStart(2, '0');
 </script>
 
 <!-- Title and date come from this page's entry in src/lib/works.ts -->
@@ -59,6 +59,11 @@
 		indicates a problem I especially liked
 	</p>
 
+	<p>Runtimes listed are the averages taken from 20 build release runs of the corresponding program. According to
+		Project Euler, these problems are designed such that "an efficient implementation will allow a solution to be obtained on a modestly 
+		powered computer in less than one minute."
+	</p>
+
 	<!-- One expandable section per solved problem (<details>: opens on click / Enter / Space),
 	     sliding open and shut via smoothDetails. The summary row shows the number and title, with a
 	     circled arrow right after the title that turns as it opens, and back as soon as it starts
@@ -70,16 +75,25 @@
 					<summary
 						class="group/summary flex cursor-pointer list-none items-center gap-4 py-4 transition-colors hover:bg-foreground/5 focus-visible:outline-2 focus-visible:outline-foreground [&::-webkit-details-marker]:hidden"
 					>
-						<span class="font-mono text-xl text-foreground/90">{pad(problem.number)}</span>
-						<span class="text-xl font-bold sm:text-2xl"
-							>{problem.title}{#if problem.liked}
-								<!-- A problem I especially liked: a green asterisk, said in words to screen readers -->
-								<span class="sr-only">&nbsp;</span>
-								<span aria-hidden="true" class="font-mono text-green-500 light:text-green-700"
-									>*</span
-								><span class="sr-only">&nbsp;(one of my favorites)</span>
-							{/if}</span
-						>
+						<!-- The number and title on one line, sharing a baseline; the solution's average runtime
+						     under the title -->
+						<span class="grid grid-cols-[auto_auto] items-baseline gap-x-4">
+							<span class="font-mono text-base text-foreground/90">{pad(problem.number)}</span>
+							<span class="text-xl font-bold sm:text-2xl"
+								>{problem.title}{#if problem.liked}
+									<!-- A problem I especially liked: a green asterisk, said in words to screen readers -->
+									<span class="sr-only">&nbsp;</span>
+									<span aria-hidden="true" class="font-mono text-green-500 light:text-green-700"
+										>*</span
+									><span class="sr-only">&nbsp;(one of my favorites)</span>
+								{/if}</span
+							>
+							{#if problem.runtime}
+								<span class="col-start-2 font-mono text-sm text-foreground/70"
+									>runtime: {problem.runtime}</span
+								>
+							{/if}
+						</span>
 						<!-- A circled down arrow like the landing page's and the back arrow. The circle turns
 						     to point it up while open (and back as soon as it starts closing); the arrow
 						     inside nudges the way it points on hover/focus. With a mouse it only shows while the
