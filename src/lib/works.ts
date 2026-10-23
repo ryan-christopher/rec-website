@@ -26,7 +26,7 @@ export const works: Work[] = [
 		date: '2026',
 		description:
 			"Using command-line utilities in Fedora Linux 43 KDE to place the script of “The Lord of the Rings: The Fellowship of the Ring” in the sectors of a drive's Host Protected Area.",
-		tags: ['Red Teaming', 'Cybersecurity', 'Linux'],
+		tags: ['Red Team', 'Cybersecurity', 'Linux'],
 		page: '/work/hpa-file-hiding',
 		image: '/images/hard_drive.png',
 		imageAlt: "Close-up of a Seagate hard drive's circuit board and SATA connector"

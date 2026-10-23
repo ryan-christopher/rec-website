@@ -85,6 +85,15 @@ export const problems: Problem[] = [
 		liked: true
 	},
 	{
+		number: 8,
+		title: 'Largest Product in a Series',
+		statement: `
+			The four adjacent digits in the 1000-digit number that have the greatest product are 9 x 9 x 8 x 9 = 5832.
+ 			Find the thirteen adjacent digits in the 1000-digit number that have the greatest product. What is the value of this product?
+		`,
+		runtime: '36.3 µs',
+	},
+	{
 		number: 9,
 		title: 'Special Pythagorean Triplet',
 		statement: `
@@ -94,6 +103,15 @@ export const problems: Problem[] = [
 		`,
 		runtime: '41.5 µs',
 		liked: true
+	},
+	{
+		number: 10,
+		title: 'Summation of Primes',
+		statement: `
+			The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
+			Find the sum of all the primes below two million.
+		`,
+		runtime: '49.484 ms',
 	},
 	{
 		number: 13,
@@ -152,6 +170,20 @@ export const problems: Problem[] = [
 			1/10 = 0.1
 			Where 0.1(6) means 0.166666…, and has a 1-digit recurring cycle. It can be seen that 1/7 has a 6-digit recurring cycle.
 			Find the value of d < 1000 for which 1/d contains the longest recurring cycle in its decimal fraction part.
-		`
-	}
+		`,
+		runtime: 'work in progress'
+	},
+	{
+		number: 30,
+		title: 'Digit Fifth Powers',
+		statement: `
+			Surprisingly there are only three numbers that can be written as the sum of fourth powers of their digits: 
+			1634 = 1^4 + 6^4 + 3^4 + 4^4
+			8208 = 8^4 + 2^4 + 0^4 + 8^4 
+			9474 = 9^4 + 4^4 + 7^4 + 4^4
+			As 1 = 1**4 is not a sum it is not included. The sum of these numbers is 1634 + 8208 + 9474 = 19316.
+			Find the sum of all the numbers that can be written as the sum of fifth powers of their digits.
+		`,
+		runtime: '880.6 µs',
+	},
 ];

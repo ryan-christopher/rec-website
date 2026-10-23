@@ -235,7 +235,7 @@
      overlap each other and the name.
      There the section grows past the screen and scrolls instead -->
 <section id="top" class="relative min-h-[max(100svh,45rem)]">
-	<!-- 2.5% padding (of the section width, on every side) lines the name up with the ticker lines.
+	<!-- 2.5% padding (of the section width, on every side), the same inset as the drum pad and cartoon.
 	     At least 2rem on top, since 2.5% of a phone's width leaves the name nearly touching the top -->
 	<header class="p-[2.5%] pt-[max(2.5%,2rem)]">
 		<!-- Scales with screen width, capped by height so it stays clear of the cartoon on short screens.
@@ -252,7 +252,7 @@
 	     ends of the ticker lines: "about me" and "resume" above, "my work" and "contact" below,
 	     each pair split left and right -->
 	<div class="absolute inset-x-0 top-1/2 flex -translate-y-1/2 flex-col gap-4">
-		<p class="flex justify-between px-[15%] text-lg leading-tight sm:text-2xl lg:px-[30%]">
+		<p class="flex justify-between px-[20%] text-lg leading-tight sm:text-2xl lg:px-[35%]">
 			<a href="#about" class={landingLink} style:--accent="var(--color-crimson)">
 				{@render linkContent('about', 'down')}
 			</a>
@@ -261,12 +261,12 @@
 			</a>
 		</p>
 
-		<!-- Scrolling binary ticker, full width, between 1px lines that span 95% of the screen
+		<!-- Scrolling binary ticker, full width, between 1px lines that span the full screen width
 		     (drawn by ::before / ::after). Four copies, sliding by half the strip (two copies)
 		     per loop, so it repeats seamlessly and stays full on wide screens -->
 		<div
 			aria-hidden="true"
-			class="pointer-events-none relative overflow-hidden py-3 font-mono text-base whitespace-nowrap text-foreground/50 select-none before:absolute before:inset-x-[2.5%] before:top-0 before:h-px before:bg-foreground after:absolute after:inset-x-[2.5%] after:bottom-0 after:h-px after:bg-foreground sm:text-lg"
+			class="pointer-events-none relative overflow-hidden py-3 font-mono text-base whitespace-nowrap text-foreground/50 select-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-foreground after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-foreground sm:text-lg"
 		>
 			<div class="flex w-max motion-safe:animate-marquee">
 				{#each { length: 4 }, i (i)}
@@ -276,7 +276,7 @@
 			</div>
 		</div>
 
-		<p class="flex justify-between px-[15%] text-lg leading-tight sm:text-2xl lg:px-[30%]">
+		<p class="flex justify-between px-[20%] text-lg leading-tight sm:text-2xl lg:px-[35%]">
 			<a href={resolve('/work')} class={landingLink} style:--accent="var(--color-jade)">
 				{@render linkContent('my work', 'right')}
 			</a>
